@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Gestión de citas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Formulario para crear una nueva cita -->
+<form #formulario="ngForm">
+  <ion-list>
+    <ion-item>
+      <ion-input
+        label="Cita" labelPlacement="floating" name="frase"
+        [(ngModel)]="frase" #fraseCtrl="ngModel"
+        required minlength="5">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="fraseCtrl.invalid && fraseCtrl.touched">
+      <p class="ion-padding-start">
+        <span *ngIf="fraseCtrl.errors?.['required']">La cita es obligatoria.</span>
+        <span *ngIf="fraseCtrl.errors?.['minlength']">La cita debe tener al menos 5 caracteres.</span>
+      </p>
+    </ion-text>
+
+    <ion-item>
+      <ion-input
+        label="Autor" labelPlacement="floating" name="autor"
+        [(ngModel)]="autor" #autorCtrl="ngModel"
+        required minlength="2">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="autorCtrl.invalid && autorCtrl.touched">
+      <p class="ion-padding-start">
+        <span *ngIf="autorCtrl.errors?.['required']">El autor es obligatorio.</span>
+        <span *ngIf="autorCtrl.errors?.['minlength']">El autor debe tener al menos 2 caracteres.</span>
+      </p>
+    </ion-text>
+  </ion-list>
+
+  <ion-button expand="block" [disabled]="formulario.invalid" (click)="agregar(formulario)">
+    Agregar
+    <ion-icon slot="end" name="add"></ion-icon>
+  </ion-button>
+</form>
+
+  <!-- Lista de citas: *ngFor repite el componente hijo por cada cita -->
+  <ion-list>
+    <app-cita-item
+      *ngFor="let c of citas"
+      [cita]="c"
+      (borrar)="eliminar($event)">
+    </app-cita-item>
+  </ion-list>
+
+</ion-content>
