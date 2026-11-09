@@ -1,0 +1,7 @@
+{
+  "name": "citas-famosas",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
